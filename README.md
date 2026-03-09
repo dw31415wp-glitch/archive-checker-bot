@@ -1,6 +1,6 @@
 ## Overview
 
-Takes a (./data/quarry-102912-untitled-run1079559.csv) of external links and checks the wayback machine for archived versions. Print the archived URL to a new csv file (./data/results\_<timestamp>.csv) like (./data/results_20260308204929.csv).
+Takes a [quarry csv](./data/quarry-102912-untitled-run1079559.csv) of external links and checks the wayback machine for archived versions. Print the archived URL to a new csv file (./data/results\_<timestamp>.csv) like [results](./data/results_20260308204929.csv).
 
 Obtains archive today links from https://quarry.wmcloud.org/query/102891 as suggested by Andrew Gray in [https://en.wikipedia.org/wiki/Wikipedia_talk:Archive.today_guidance#c-Andrew_Gray-20260221222900-WhatamIdoing-20260221214600]
 
