@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "archive-checker-bot"
+version = "0.1.0"
+description = "Basic command-line Pywikibot project"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pywikibot",
+]
+
+[project.scripts]
+archive-checker-bot = "archive_checker_bot.cli:main"

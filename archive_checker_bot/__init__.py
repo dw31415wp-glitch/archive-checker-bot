@@ -1,0 +1,1 @@
+"""Archive checker bot package."""
