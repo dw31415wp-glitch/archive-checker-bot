@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>External link warning</title>
+    <meta
+      name="description"
+      content="A GitHub Pages-friendly interstitial warning page for potentially unsafe outbound links."
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --page-bg: #f8f9fa;
+        --surface-bg: #ffffff;
+        --surface-muted: #eaecf0;
+        --border: #a2a9b1;
+        --border-strong: #72777d;
+        --text: #202122;
+        --text-muted: #54595d;
+        --link: #3366cc;
+        --link-hover: #447ff5;
+        --warning-bg: #fff8e6;
+        --warning-border: #b27f00;
+        --primary-bg: #3366cc;
+        --primary-hover: #2a4b8d;
+        --primary-text: #ffffff;
+        --focus: #36c;
+        --shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        --serif: "Linux Libertine", "Georgia", "Times New Roman", serif;
+        --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--page-bg);
+        color: var(--text);
+        font-family: var(--serif);
+        line-height: 1.65;
+      }
+
+      a {
+        color: var(--link);
+      }
+
+      a:hover {
+        color: var(--link-hover);
+      }
+
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 2px;
+      }
+
+      .site-header {
+        border-bottom: 1px solid var(--border);
+        background: var(--surface-bg);
+      }
+
+      .site-header__inner,
+      .content-column,
+      .site-footer {
+        width: min(100%, 72rem);
+        margin: 0 auto;
+        padding-inline: 1rem;
+      }
+
+      .site-header__inner {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-top: 0.85rem;
+        padding-bottom: 0.85rem;
+      }
+
+      .wordmark {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .wordmark__title {
+        font-family: var(--serif);
+        font-size: 1.75rem;
+        line-height: 1.1;
+      }
+
+      .wordmark__tagline {
+        color: var(--text-muted);
+        font-family: var(--sans);
+        font-size: 0.9rem;
+      }
+
+      .header-note {
+        max-width: 22rem;
+        color: var(--text-muted);
+        font-family: var(--sans);
+        font-size: 0.9rem;
+        text-align: right;
+      }
+
+      .content-column {
+        padding-top: 1.25rem;
+        padding-bottom: 2rem;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+      }
+
+      .eyebrow {
+        margin: 0 0 0.25rem;
+        color: var(--text-muted);
+        font-family: var(--sans);
+        font-size: 0.85rem;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      .warning-panel,
+      .info-panel {
+        background: var(--surface-bg);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+      }
+
+      .warning-panel {
+        border-left: 4px solid var(--warning-border);
+      }
+
+      .panel-body {
+        padding: 1.25rem;
+      }
+
+      h1,
+      h2 {
+        margin-top: 0;
+        font-weight: 400;
+        line-height: 1.25;
+      }
+
+      h1 {
+        margin-bottom: 0.75rem;
+        font-size: clamp(1.9rem, 3vw, 2.4rem);
+      }
+
+      h2 {
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.25rem;
+        border-bottom: 1px solid var(--surface-muted);
+        font-size: 1.5rem;
+      }
+
+      p {
+        margin: 0.75rem 0;
+      }
+
+      .status-box {
+        margin: 1rem 0 0;
+        padding: 0.85rem 1rem;
+        background: var(--warning-bg);
+        border: 1px solid var(--warning-border);
+        color: var(--text);
+        font-family: var(--sans);
+      }
+
+      .detail-grid {
+        display: grid;
+        gap: 0.85rem;
+        margin-top: 1rem;
+      }
+
+      .detail-row {
+        display: grid;
+        gap: 0.25rem;
+        padding: 0.75rem 0;
+        border-top: 1px solid var(--surface-muted);
+      }
+
+      .detail-row:first-child {
+        border-top: 0;
+        padding-top: 0;
+      }
+
+      dt {
+        color: var(--text-muted);
+        font-family: var(--sans);
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+      }
+
+      dd {
+        margin: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2.5rem;
+        padding: 0.65rem 1rem;
+        border: 1px solid var(--border-strong);
+        background: var(--surface-bg);
+        color: var(--text);
+        font-family: var(--sans);
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .button:hover {
+        background: var(--surface-muted);
+      }
+
+      .button--primary {
+        border-color: var(--primary-hover);
+        background: var(--primary-bg);
+        color: var(--primary-text);
+      }
+
+      .button--primary:hover {
+        background: var(--primary-hover);
+        color: var(--primary-text);
+      }
+
+      .button[aria-disabled="true"] {
+        opacity: 0.55;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+
+      .small-note {
+        color: var(--text-muted);
+        font-family: var(--sans);
+        font-size: 0.9rem;
+      }
+
+      .site-footer {
+        padding-bottom: 2rem;
+        color: var(--text-muted);
+        font-family: var(--sans);
+        font-size: 0.85rem;
+      }
+
+      @media (min-width: 60rem) {
+        .content-grid {
+          grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
+        }
+      }
+
+      @media (max-width: 40rem) {
+        .site-header__inner {
+          flex-direction: column;
+        }
+
+        .header-note {
+          max-width: none;
+          text-align: left;
+        }
+
+        .actions {
+          flex-direction: column;
+        }
+
+        .button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <div class="wordmark">
+          <span class="wordmark__title">Archive Checker Bot</span>
+          <span class="wordmark__tagline">Interstitial warning page demo</span>
+        </div>
+        <div class="header-note">
+          This page adds a pause before opening a destination that may be unsafe
+          or blocked by browsers and security tools.
+        </div>
+      </div>
+    </header>
+
+    <main class="content-column">
+      <div class="content-grid">
+        <article class="warning-panel">
+          <div class="panel-body">
+            <p class="eyebrow">External link warning</p>
+            <h1 id="page-title">Review this destination before continuing</h1>
+            <p id="warning-copy">
+              This page checks the outbound link and gives you a chance to leave
+              safely, go back, or try a safer archive-oriented alternative.
+            </p>
+
+            <div class="status-box" id="status-box" aria-live="polite">
+              Loading destination details...
+            </div>
+
+            <dl class="detail-grid" aria-label="Destination details">
+              <div class="detail-row">
+                <dt>Destination URL</dt>
+                <dd><a id="destination-link" href="#"></a></dd>
+              </div>
+              <div class="detail-row">
+                <dt>Destination domain</dt>
+                <dd id="destination-domain">Not available</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Safer alternative</dt>
+                <dd><a id="alternative-link" href="#"></a></dd>
+              </div>
+            </dl>
+
+            <div class="actions">
+              <a
+                class="button button--primary"
+                id="proceed-button"
+                href="#"
+                rel="noreferrer noopener"
+              >
+                Proceed to destination
+              </a>
+              <button class="button" id="back-button" type="button">Go back</button>
+              <a
+                class="button"
+                id="alternative-button"
+                href="#"
+                rel="noreferrer noopener"
+                target="_blank"
+              >
+                Use safer alternative
+              </a>
+            </div>
+
+            <p class="small-note" id="history-note">
+              If there is no previous page in your browser history, the Go back
+              button will return you to the neutral interstitial landing page.
+            </p>
+          </div>
+        </article>
+
+        <aside class="info-panel">
+          <div class="panel-body">
+            <h2>Why this page exists</h2>
+            <p>
+              Some archive and mirror services can trigger malware warnings,
+              browser blocks, or security reviews. This interstitial gives users
+              context before leaving the current page.
+            </p>
+            <p>
+              The design intentionally uses an article-like layout inspired by
+              Wikipedia: a centered reading column, restrained borders, serif
+              body text, and utility-style actions.
+            </p>
+          </div>
+        </aside>
+
+        <section class="info-panel">
+          <div class="panel-body">
+            <h2>How the link format works</h2>
+            <p>
+              Pass a destination URL in the <code>url</code> query parameter.
+              Only HTTP and HTTPS destinations are accepted.
+            </p>
+            <p>
+              Example:
+              <code
+                >?url=https://archive.today/2025.01.01-120000/https://example.org/article</code
+              >
+            </p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      Static HTML, CSS, and JavaScript only. Suitable for direct hosting with
+      GitHub Pages.
+    </footer>
+
+    <script>
+      (function () {
+        var elements = {
+          title: document.getElementById("page-title"),
+          warningCopy: document.getElementById("warning-copy"),
+          statusBox: document.getElementById("status-box"),
+          destinationLink: document.getElementById("destination-link"),
+          destinationDomain: document.getElementById("destination-domain"),
+          alternativeLink: document.getElementById("alternative-link"),
+          proceedButton: document.getElementById("proceed-button"),
+          backButton: document.getElementById("back-button"),
+          alternativeButton: document.getElementById("alternative-button"),
+          historyNote: document.getElementById("history-note"),
+        };
+
+        function disableLink(link, text) {
+          link.textContent = text;
+          link.removeAttribute("href");
+          link.setAttribute("aria-disabled", "true");
+        }
+
+        function enableLink(link, href, text) {
+          link.href = href;
+          link.textContent = text;
+          link.removeAttribute("aria-disabled");
+        }
+
+        function extractArchiveTarget(rawUrl) {
+          var protocolMatches = Array.from(rawUrl.matchAll(/https?:\/\//gi));
+          if (protocolMatches.length < 2) {
+            return null;
+          }
+
+          try {
+            return new URL(rawUrl.slice(protocolMatches[1].index));
+          } catch (error) {
+            return null;
+          }
+        }
+
+        function buildWaybackAlternative(destination) {
+          var archiveTarget = extractArchiveTarget(destination.href);
+          var preferredTarget = archiveTarget ? archiveTarget.href : destination.href;
+          return "https://web.archive.org/web/*/" + encodeURI(preferredTarget);
+        }
+
+        function setInvalidState(message) {
+          document.title = "External link warning - invalid destination";
+          elements.title.textContent = "This interstitial link is incomplete";
+          elements.warningCopy.textContent =
+            "The destination could not be loaded safely. Check the link format and try again.";
+          elements.statusBox.textContent = message;
+          elements.destinationDomain.textContent = "Unavailable";
+          disableLink(elements.destinationLink, "No valid destination provided");
+          disableLink(elements.proceedButton, "Proceed unavailable");
+          disableLink(elements.alternativeLink, "No safer alternative available");
+          disableLink(elements.alternativeButton, "Use safer alternative");
+          elements.historyNote.textContent =
+            "Go back will return to the plain interstitial page when no browser history is available.";
+        }
+
+        function buildWarningCopy(destination) {
+          if (/archive\./i.test(destination.hostname)) {
+            return (
+              "The destination appears to use an archive service that may trigger browser warnings or security tooling. Continue only if you trust the source and expect this archived page."
+            );
+          }
+
+          return (
+            "You are about to leave this site for an external destination. Review the domain carefully and continue only if you trust the source."
+          );
+        }
+
+        function populateValidState(destination) {
+          var saferAlternative = buildWaybackAlternative(destination);
+          var hasBackHistory = window.history.length > 1 && document.referrer !== "";
+
+          document.title = "External link warning - " + destination.hostname;
+          elements.warningCopy.textContent = buildWarningCopy(destination);
+          elements.statusBox.textContent =
+            "You are leaving for " +
+            destination.hostname +
+            ". Review the destination details below before continuing.";
+          enableLink(elements.destinationLink, destination.href, destination.href);
+          elements.destinationDomain.textContent = destination.hostname;
+          enableLink(
+            elements.alternativeLink,
+            saferAlternative,
+            saferAlternative
+          );
+          enableLink(
+            elements.proceedButton,
+            destination.href,
+            "Proceed to " + destination.hostname
+          );
+          enableLink(
+            elements.alternativeButton,
+            saferAlternative,
+            "Use Wayback Machine alternative"
+          );
+          elements.historyNote.textContent = hasBackHistory
+            ? "Go back will return you to the previous page in this tab."
+            : "No previous page was detected in this tab, so Go back will return to the neutral interstitial landing page.";
+        }
+
+        elements.backButton.addEventListener("click", function () {
+          if (window.history.length > 1 && document.referrer !== "") {
+            window.history.back();
+            return;
+          }
+
+          window.location.assign(window.location.pathname);
+        });
+
+        var searchParams = new URLSearchParams(window.location.search);
+        var rawDestination = searchParams.get("url");
+
+        if (!rawDestination) {
+          setInvalidState(
+            'Missing "url" query parameter. Example: ?url=https://archive.today/example'
+          );
+          return;
+        }
+
+        var destination;
+
+        try {
+          destination = new URL(rawDestination);
+        } catch (error) {
+          setInvalidState("The provided destination is not a valid absolute URL.");
+          return;
+        }
+
+        if (destination.protocol !== "http:" && destination.protocol !== "https:") {
+          setInvalidState("Only HTTP and HTTPS destination URLs are allowed.");
+          return;
+        }
+
+        populateValidState(destination);
+      })();
+    </script>
+  </body>
+</html>

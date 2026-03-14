@@ -4,14 +4,14 @@
 
 - [ ] Confirm the target GitHub Pages URL structure for the interstitial page.
 - [ ] Document the accepted incoming query parameter format: `?url=<archive.today-url>`.
-- [ ] Define which archive domains are allowed, such as `archive.today` and any supported aliases.
+- [ ] Confirm that the interstitial accepts any incoming destination domain supplied via the `url` parameter.
 - [ ] Define failure behavior for missing, malformed, or unsupported `url` values.
 - [ ] Write acceptance criteria for the three user actions: proceed, go back, and use safer alternative.
 
 ## 2. Build the page shell
 
 - [ ] Create the interstitial page entry file for GitHub Pages hosting.
-- [ ] Add the page layout for the warning title, explanatory copy, and action buttons.
+- [ ] Add a page layout for the warning title, explanatory copy, and action buttons using a Wikipedia-like content structure with a centered reading column.
 - [ ] Add semantic markup and page metadata, including a descriptive page title.
 - [ ] Ensure the page works as a static site without server-side dependencies.
 
@@ -27,7 +27,7 @@
 
 - [ ] Read the `url` query parameter from the page URL.
 - [ ] Validate and normalize the destination URL before rendering or navigation.
-- [ ] Block navigation when the destination is not an allowed archive.today URL.
+- [ ] Block navigation only when the destination URL is missing, malformed, or uses a disallowed protocol.
 - [ ] Wire the **Proceed** action to navigate to the validated destination.
 - [ ] Wire the **Go Back** action to browser history with a safe fallback.
 - [ ] Wire the **Use Safer Alternative** action to the configured safer destination.
@@ -35,8 +35,13 @@
 ## 5. Style the page
 
 - [ ] Add CSS for a simple, readable warning layout.
+- [ ] Style the page with a Wikipedia-like presentation, including an off-white page background, restrained borders, and minimal accent colors.
+- [ ] Use Wikipedia-like typography with readable serif-forward body text and clean sans-serif treatment for navigation and actions.
+- [ ] Use article-style spacing and a centered max-width content column similar to a reference page layout.
+- [ ] Add a subtle framed container or notice box that feels similar to Wikipedia content panels or infobox-adjacent framing.
 - [ ] Make the warning and actions clear on desktop and mobile screen sizes.
-- [ ] Use visual hierarchy that emphasizes caution without making the page hard to use.
+- [ ] Use visual hierarchy that feels similar to Wikipedia section headings and content blocks while still emphasizing caution and the primary actions.
+- [ ] Keep action controls restrained and utility-like rather than heavily promotional, while preserving clear affordances.
 - [ ] Add visible focus states and hover states for interactive controls.
 
 ## 6. Accessibility and content quality

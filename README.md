@@ -48,3 +48,45 @@ Example:
 ```bash
 archive-checker-bot site-info --code fr --family wikipedia
 ```
+
+## Interstitial page demo
+
+The repository root now includes a static `index.html` interstitial page intended
+for GitHub Pages hosting. It accepts a destination URL through the `url` query
+parameter and displays a warning page before navigation.
+
+Example:
+
+```text
+https://your-pages-url.example/?url=https://archive.today/2025.01.01-120000/https://example.org/article
+```
+
+For local preview, serve the repository root with a simple static server such as:
+
+```bash
+python -m http.server
+```
+
+## GitHub Pages deployment
+
+The repository now includes `.github/workflows/pages.yml`, which publishes the
+static interstitial page with GitHub Actions.
+
+Expected public URL:
+
+```text
+https://dw31415wp-glitch.github.io/archive-checker-bot/
+```
+
+To publish it:
+
+1. Commit and push the changes to `main`.
+2. In GitHub, open `Settings` -> `Pages`.
+3. Under **Build and deployment**, set **Source** to **GitHub Actions** if it is
+   not already enabled.
+4. Wait for the `Deploy GitHub Pages` workflow to finish.
+5. Open the public URL with a test destination, for example:
+
+```text
+https://dw31415wp-glitch.github.io/archive-checker-bot/?url=https://archive.today/2025.01.01-120000/https://example.org/article
+```
