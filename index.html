@@ -306,7 +306,8 @@
             <h1 id="page-title">Review this destination before continuing</h1>
             <p id="warning-copy">
               This page checks the outbound link and gives you a chance to leave
-              safely, go back, or try a safer archive-oriented alternative.
+              safely, try the Wayback Machine first, or continue directly only if
+              needed.
             </p>
 
             <div class="status-box" id="status-box" aria-live="polite">
@@ -323,7 +324,7 @@
                 <dd id="destination-domain">Not available</dd>
               </div>
               <div class="detail-row">
-                <dt>Safer alternative</dt>
+                <dt>Recommended first step</dt>
                 <dd><a id="alternative-link" href="#"></a></dd>
               </div>
             </dl>
@@ -331,6 +332,15 @@
             <div class="actions">
               <a
                 class="button button--primary"
+                id="alternative-button"
+                href="#"
+                rel="noreferrer noopener"
+                target="_blank"
+              >
+                Try Wayback Machine first
+              </a>
+              <a
+                class="button"
                 id="proceed-button"
                 href="#"
                 rel="noreferrer noopener"
@@ -338,15 +348,6 @@
                 Proceed to destination
               </a>
               <button class="button" id="back-button" type="button">Go back</button>
-              <a
-                class="button"
-                id="alternative-button"
-                href="#"
-                rel="noreferrer noopener"
-                target="_blank"
-              >
-                Use safer alternative
-              </a>
             </div>
 
             <p class="small-note" id="history-note">
@@ -363,6 +364,10 @@
               Some archive and mirror services can trigger malware warnings,
               browser blocks, or security reviews. This interstitial gives users
               context before leaving the current page.
+            </p>
+            <p>
+              The default recommendation is to try the Wayback Machine first, then
+              proceed directly only if the archived alternative is not sufficient.
             </p>
             <p>
               The design intentionally uses an article-like layout inspired by
@@ -450,8 +455,8 @@
           elements.destinationDomain.textContent = "Unavailable";
           disableLink(elements.destinationLink, "No valid destination provided");
           disableLink(elements.proceedButton, "Proceed unavailable");
-          disableLink(elements.alternativeLink, "No safer alternative available");
-          disableLink(elements.alternativeButton, "Use safer alternative");
+          disableLink(elements.alternativeLink, "No Wayback alternative available");
+          disableLink(elements.alternativeButton, "Try Wayback Machine first");
           elements.historyNote.textContent =
             "Go back will return to the plain interstitial page when no browser history is available.";
         }
@@ -459,12 +464,12 @@
         function buildWarningCopy(destination) {
           if (/archive\./i.test(destination.hostname)) {
             return (
-              "The destination appears to use an archive service that may trigger browser warnings or security tooling. Continue only if you trust the source and expect this archived page."
+              "The destination appears to use an archive service that may trigger browser warnings or security tooling. Try the Wayback Machine version first, and continue directly only if you trust the source and still need this archived page."
             );
           }
 
           return (
-            "You are about to leave this site for an external destination. Review the domain carefully and continue only if you trust the source."
+            "You are about to leave this site for an external destination. Review the domain carefully, try the Wayback Machine first when possible, and continue directly only if you trust the source."
           );
         }
 
@@ -475,9 +480,9 @@
           document.title = "External link warning - " + destination.hostname;
           elements.warningCopy.textContent = buildWarningCopy(destination);
           elements.statusBox.textContent =
-            "You are leaving for " +
+            "Recommended first step: try the Wayback Machine snapshot for " +
             destination.hostname +
-            ". Review the destination details below before continuing.";
+            ". Continue to the original destination only if needed.";
           enableLink(elements.destinationLink, destination.href, destination.href);
           elements.destinationDomain.textContent = destination.hostname;
           enableLink(
@@ -493,7 +498,7 @@
           enableLink(
             elements.alternativeButton,
             saferAlternative,
-            "Use Wayback Machine alternative"
+            "Try Wayback Machine first"
           );
           elements.historyNote.textContent = hasBackHistory
             ? "Go back will return you to the previous page in this tab."

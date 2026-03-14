@@ -53,7 +53,8 @@ archive-checker-bot site-info --code fr --family wikipedia
 
 The repository root now includes a static `index.html` interstitial page intended
 for GitHub Pages hosting. It accepts a destination URL through the `url` query
-parameter and displays a warning page before navigation.
+parameter and displays a warning page before navigation, with the Wayback
+Machine presented as the default recommended action.
 
 Example:
 
@@ -77,6 +78,10 @@ Expected public URL:
 ```text
 https://dw31415wp-glitch.github.io/archive-checker-bot/
 ```
+
+Direct test link:
+
+[`https://dw31415wp-glitch.github.io/archive-checker-bot/?url=https://archive.today/2025.01.01-120000/https://example.org/article`](https://dw31415wp-glitch.github.io/archive-checker-bot/?url=https://archive.today/2025.01.01-120000/https://example.org/article)
 
 To publish it:
 

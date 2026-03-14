@@ -18,9 +18,9 @@
 ## 3. Implement warning content and UX
 
 - [ ] Write clear warning text explaining why archive.today links may be risky.
-- [ ] Add a prominent **Proceed** action that is visually distinct but clearly secondary to the warning.
+- [ ] Add a prominent **Try Wayback Machine First** action that is visually distinct and treated as the default recommended path.
+- [ ] Keep the **Proceed** action available, but clearly secondary to the Wayback-first recommendation.
 - [ ] Add a **Go Back** action that returns the user to the previous page when possible.
-- [ ] Add a **Use Safer Alternative** action that links to the selected replacement tool or guidance.
 - [ ] Add fallback copy for cases where browser history is unavailable.
 
 ## 4. Implement link parsing and navigation logic
@@ -28,9 +28,9 @@
 - [ ] Read the `url` query parameter from the page URL.
 - [ ] Validate and normalize the destination URL before rendering or navigation.
 - [ ] Block navigation only when the destination URL is missing, malformed, or uses a disallowed protocol.
+- [ ] Wire the default primary action to a Wayback Machine lookup or snapshot for the validated destination.
 - [ ] Wire the **Proceed** action to navigate to the validated destination.
 - [ ] Wire the **Go Back** action to browser history with a safe fallback.
-- [ ] Wire the **Use Safer Alternative** action to the configured safer destination.
 
 ## 5. Style the page
 

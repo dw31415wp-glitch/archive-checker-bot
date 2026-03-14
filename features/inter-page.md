@@ -10,7 +10,7 @@ Archive.today is a web archiving service that allows users to save snapshots of 
 
 ## Implementation
 
-The interstitial page is implemented using HTML, CSS, and JavaScript. It displays a warning message to the user, along with options to either proceed to the destination link, go back, or link to a tool to replace the destination with a safer alternative. The page is designed to be simple and user-friendly, while effectively communicating the potential risks associated with the destination. Its visual presentation should feel similar to Wikipedia, using a centered reading column, restrained colors, serif-forward body text, and subtle framed content areas.
+The interstitial page is implemented using HTML, CSS, and JavaScript. It displays a warning message to the user, along with options to try the Wayback Machine first, proceed to the destination link, or go back. The page is designed to be simple and user-friendly, while effectively communicating the potential risks associated with the destination. Its visual presentation should feel similar to Wikipedia, using a centered reading column, restrained colors, serif-forward body text, and subtle framed content areas.
 
 ### Incoming Link Specification
 
@@ -19,10 +19,10 @@ The interstitial page can be accessed by appending the destination URL as a quer
 
 ### Warning Message
 
-The warning message should clearly inform users about the potential risks of visiting the destination link, including the possibility of encountering malicious content. For archive.today links, the copy should explain why the service may trigger browser or security warnings. It should also provide options for users to proceed, go back, or use a safer alternative.
+The warning message should clearly inform users about the potential risks of visiting the destination link, including the possibility of encountering malicious content. For archive.today links, the copy should explain why the service may trigger browser or security warnings. It should present trying the Wayback Machine as the default recommendation, while still allowing users to proceed or go back.
 
 ### User Options
 
+- **Try Wayback Machine First**: This is the default recommended option and should take users to a Wayback Machine lookup or snapshot for the destination.
 - **Proceed**: This option allows users to continue to the destination link despite the warning.
 - **Go Back**: This option takes users back to the previous page they were on before encountering the interstitial page.
-- **Use Safer Alternative**: This option can link to a tool or service that provides a safer alternative when one is available, such as a different web archiving service or a browser extension that can safely handle archived content.
